@@ -1,0 +1,207 @@
+---
+title: "Cipla stock time series analysis"
+author: "Disha Patel- 10A"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+
+##### Downloading and loading relevant packages
+
+```{r}
+packages = c('tseries', 'forecast', 'FinTS', 'rugarch', 'quantmod')
+lapply(packages, require, character.only = TRUE)
+```
+
+
+##### Loading  stock price data from Yahoo
+
+```{r}
+getSymbols(Symbols = 'CIPLA.NS', 
+           src = 'yahoo', 
+           from = as.Date('2019-01-01'), 
+           to = as.Date('2022-12-31'),
+           periodicity = 'daily')
+```
+
+
+##### Removing NA values from data
+```{r}
+cipla_price = na.omit(CIPLA.NS$CIPLA.NS.Adjusted)
+class(cipla_price)
+plot( cipla_price)
+```
+#### ADF test for price to check stationarity
+###### Objective : To load stock price dataset and check for its stationarity
+###### Analysis : Extracted stock price data and checked for stationarity; H0 : Price is not stationary
+###### Results : Null hypothesis is accepted; p-value = 0.277
+###### Managerial implication : Stock price of Cipla is not stationary in the given time period and thus returns needs to be calculated
+```{r}
+adf_test_cipla_price = adf.test(cipla_price)
+adf_test_cipla_price
+```
+
+
+#### Obtaining cipla stock return price
+
+#### ADF test for price to check stationarity
+###### Objective : To obtain returns from stock price dataset and check for its stationarity
+###### Analysis : Extracted return, visualised and checked for stationarity; H0 : Price is not stationary
+###### Results : Null hypothesis is rejected; p-value = 0.01
+###### Managerial implication : Returns of Cipla is stationary in the given time period.
+
+```{r}
+cipla_ret =na.omit(diff(log(cipla_price)))
+plot(cipla_ret)
+
+```
+
+```{r}
+adf_test_cipla = adf.test(cipla_ret)
+adf_test_cipla
+```
+
+
+#### Checking for autocorrelation using Ljung-Box Test
+
+###### Objective : To check for presence of autocorrelation in the returns dataset.
+###### Analysis : Performed Box-Pierce test,to assess the presence of autocorrelation in cipla returns dataset
+###### Results : Null hypothesis is rejected; p-value = 0.03651
+###### Managerial implication : Statistically significant autocorrelation present in the returns of the Cipla stock, there is a pattern or relationship between the returns at different time periods, which could be important for further analysis or modeling of the data
+
+```{r}
+lb_test_cipla_ds = Box.test(cipla_ret)
+lb_test_cipla_ds
+```
+
+#### Modelling for ARIMA
+
+##### Plotting ACF and PACF plots to determine lag value
+
+```{r}
+acf(cipla_ret)
+```
+
+
+```{r}
+pacf(cipla_ret)
+```
+##### MA order: ACF cuts off after 0 lags
+##### AR order : PACF slowly declines / tapers
+
+##### Using auto - ARIMA 
+
+###### Objective : To perform autoARIMA modeling on the daily returns of Cipla stock
+###### Analysis : Used the 'auto.arima' function to automatically select the ARIMA model for returns
+###### Results : The ARIMA model is specified as (1,0,0), indicating that it includes an autoregressive (AR) term of order 1 and no differencing (I) or moving average (MA) terms i.e. ; AR Order (p-Lags) : p lags = 1; d-Degree of Differencing = 0 (returns price); MA Order (q-Lags): q lags = 0
+###### Managerial implication : The negative AR coefficient suggests a negative autocorrelation, indicating that past returns have a negative impact on current returns. The estimated parameters can be used to make predictions about future returns and assess the model's performance.
+
+```{r}
+arma_pq_cipla = auto.arima(cipla_ret) 
+arma_pq_cipla
+```
+
+#### Checking ARIMA residuals for autocorrelation using Ljung box test
+
+```{r}
+lb_test_arma_pq_cipla_ds = Box.test(arma_pq_cipla$residuals)
+lb_test_arma_pq_cipla_ds
+```
+###### Result: p-value = 0.9477, null hypothesis is accepted, ARIMA model is appropriate, no autocorrelation in residuals
+###### Model : y(t) = 8e - 04 -n0.0665*y(t-1) + e(t)
+
+#### Forcasting for 40 days
+
+```{r}
+cipla_ds_fpq = forecast(arma_pq_cipla, h = 40)
+plot(cipla_ds_fpq)
+```
+#### Squaring ARIMA residuals and checking for autocorrelation
+
+```{r}
+cipla_sq = arma_pq_cipla$residuals^2
+plot(cipla_sq)
+```
+
+```{r}
+cipla_ret_sq_box_test = Box.test(cipla_sq, lag = 10)
+cipla_ret_sq_box_test
+```
+###### Null is accpeted, p-value < 2.2e-16; H0: Return Variance Series is Not Serially Correlated
+
+
+#### Checking for Heteroskedasticity using ARCH LM test
+
+
+###### Objective :  To test for volatility clustering or heteroskedasticity in the residuals of the ARIMA(1, 0, 0) model
+###### Analysis : Conducted Box test and ARCH test on the squared residuals to assess the presence of volatility clustering
+###### Results : Null hypothesis is rejected; p-value = 0.01; H0: No heteroskedasticity present
+###### Managerial implication : There are significant ARCH effects present in the returns of the Cipla stock. In other words, the variance of the returns is not constant over time, indicating that the volatility of the stock's returns varies over time.
+```{r}
+cipla_arch_test = ArchTest(cipla_sq, lags = 1)
+cipla_arch_test
+```
+#### Modelling for GARCH
+
+###### Objective :  To fit GARCH models to the residuals of the ARIMA(1, 0, 0) model and test for volatility clustering.
+###### Analysis : Conducted Box test and ARCH test on the squared residuals to assess the presence of volatility clustering
+###### Results : Null hypothesis is rejected; p-value = 0.01; H0: No heteroskedasticity present
+###### Managerial implication : There are significant ARCH effects present in the returns of the Cipla stock. In other words, the variance of the returns is not constant over time, indicating that the volatility of the stock's returns varies over time.
+
+```{r}
+garch_model1 = ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), mean.model = list(armaOrder = c(0,0), include.mean = TRUE))
+cipla_ret_garch1 = ugarchfit(garch_model1, data = cipla_ret); 
+cipla_ret_garch1
+```
+
+
+```{r}
+squared_residuals <- residuals(cipla_ret_garch1)^2
+plot(squared_residuals)
+
+```
+
+```{r}
+arch_lm_test_squared <- ArchTest(squared_residuals, lags = 10)
+arch_lm_test_squared
+```
+
+
+
+```{r}
+garch_model2 = ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), mean.model = list(armaOrder = c(1,1), include.mean = FALSE))
+cipla_ret_garch2 = ugarchfit(garch_model2, data = cipla_ret); 
+cipla_ret_garch2
+```
+
+```{r}
+squared_residuals2 <- residuals(cipla_ret_garch2)^2
+plot(squared_residuals2)
+```
+
+```{r}
+arch_lm_test_squared2 <- ArchTest(squared_residuals2, lags = 10)
+arch_lm_test_squared2
+```
+
+```{r}
+arima_model <- arima(cipla_ret, order = c(1,0,0))
+arima_residuals <- residuals(arima_model)
+garch_spec <- ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), 
+                         mean.model = list(armaOrder = c(0,0), include.mean = FALSE))
+garch_fit <- ugarchfit(garch_spec, data = arima_residuals^2)
+print(garch_fit)
+```
+
+
+```{r}
+arch_lm_test <- ArchTest(residuals(garch_fit)^2, lags = 10)
+print(arch_lm_test)
+```
+
+```{r}
+
+
+```
+
