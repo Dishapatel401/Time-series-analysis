@@ -153,58 +153,23 @@ cipla_arch_test
 ###### **Managerial implication** : There are significant ARCH effects present in the returns of the Cipla stock. In other words, the variance of the returns is not constant over time, indicating that the volatility of the stock's returns varies over time.
 
 ```{r}
-garch_model1 = ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), mean.model = list(armaOrder = c(0,0), include.mean = TRUE))
-cipla_ret_garch1 = ugarchfit(garch_model1, data = cipla_ret); 
-cipla_ret_garch1
+garch_cipla <- ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), 
+                         mean.model = list(armaOrder = c(0,0), include.mean = FALSE))
+garch_cipla
 ```
 
-
-```{r}
-squared_residuals <- residuals(cipla_ret_garch1)^2
-plot(squared_residuals)
-
-```
-
-```{r}
-arch_lm_test_squared <- ArchTest(squared_residuals, lags = 10)
-arch_lm_test_squared
-```
-
-
-
-```{r}
-garch_model2 = ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), mean.model = list(armaOrder = c(1,1), include.mean = FALSE))
-cipla_ret_garch2 = ugarchfit(garch_model2, data = cipla_ret); 
-cipla_ret_garch2
-```
-
-```{r}
-squared_residuals2 <- residuals(cipla_ret_garch2)^2
-plot(squared_residuals2)
-```
-
-```{r}
-arch_lm_test_squared2 <- ArchTest(squared_residuals2, lags = 10)
-arch_lm_test_squared2
-```
 
 ```{r}
 arima_model <- arima(cipla_ret, order = c(1,0,0))
 arima_residuals <- residuals(arima_model)
-garch_spec <- ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), 
-                         mean.model = list(armaOrder = c(0,0), include.mean = FALSE))
 garch_fit <- ugarchfit(garch_spec, data = arima_residuals^2)
-print(garch_fit)
-```
-
-
-```{r}
 arch_lm_test <- ArchTest(residuals(garch_fit)^2, lags = 10)
 print(arch_lm_test)
-```
-
-```{r}
-
 
 ```
+
+
+
+
+
 
