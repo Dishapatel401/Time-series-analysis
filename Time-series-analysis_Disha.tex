@@ -1,0 +1,1031 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Cipla stock time series analysis},
+  pdfauthor={Disha Patel- 10A},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Cipla stock time series analysis}
+\author{Disha Patel- 10A}
+\date{}
+
+\begin{document}
+\maketitle
+
+================================================
+
+\hypertarget{downloading-and-loading-relevant-packages}{%
+\subparagraph{\texorpdfstring{\textbf{Downloading and loading relevant
+packages}}{Downloading and loading relevant packages}}\label{downloading-and-loading-relevant-packages}}
+
+================================================
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{packages }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}tseries\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}forecast\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}FinTS\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rugarch\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}quantmod\textquotesingle{}}\NormalTok{)}
+\FunctionTok{lapply}\NormalTok{(packages, require, }\AttributeTok{character.only =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: tseries
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'tseries' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'quantmod':
+##   method            from
+##   as.zoo.data.frame zoo
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: forecast
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'forecast' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: FinTS
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'FinTS' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: zoo
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'zoo' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'zoo'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'FinTS'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:forecast':
+## 
+##     Acf
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: rugarch
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'rugarch' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: parallel
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'rugarch'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     sigma
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: quantmod
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'quantmod' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: xts
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'xts' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: TTR
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'TTR' was built under R version 4.3.2
+\end{verbatim}
+
+\begin{verbatim}
+## [[1]]
+## [1] TRUE
+## 
+## [[2]]
+## [1] TRUE
+## 
+## [[3]]
+## [1] TRUE
+## 
+## [[4]]
+## [1] TRUE
+## 
+## [[5]]
+## [1] TRUE
+\end{verbatim}
+
+==========================================
+
+\hypertarget{loading-stock-price-data-from-yahoo}{%
+\subparagraph{\texorpdfstring{\textbf{Loading stock price data from
+Yahoo}}{Loading stock price data from Yahoo}}\label{loading-stock-price-data-from-yahoo}}
+
+===========================================
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{getSymbols}\NormalTok{(}\AttributeTok{Symbols =} \StringTok{\textquotesingle{}CIPLA.NS\textquotesingle{}}\NormalTok{, }
+           \AttributeTok{src =} \StringTok{\textquotesingle{}yahoo\textquotesingle{}}\NormalTok{, }
+           \AttributeTok{from =} \FunctionTok{as.Date}\NormalTok{(}\StringTok{\textquotesingle{}2019{-}01{-}01\textquotesingle{}}\NormalTok{), }
+           \AttributeTok{to =} \FunctionTok{as.Date}\NormalTok{(}\StringTok{\textquotesingle{}2022{-}12{-}31\textquotesingle{}}\NormalTok{),}
+           \AttributeTok{periodicity =} \StringTok{\textquotesingle{}daily\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "CIPLA.NS"
+\end{verbatim}
+
+==================================
+
+\hypertarget{removing-na-values-from-data}{%
+\subparagraph{\texorpdfstring{\textbf{Removing NA values from
+data}}{Removing NA values from data}}\label{removing-na-values-from-data}}
+
+===================================
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_price }\OtherTok{=} \FunctionTok{na.omit}\NormalTok{(CIPLA.NS}\SpecialCharTok{$}\NormalTok{CIPLA.NS.Adjusted)}
+\FunctionTok{class}\NormalTok{(cipla\_price)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "xts" "zoo"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{( cipla\_price)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Time-series-analysis_Disha_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+=============================================
+
+\hypertarget{adf-test-for-price-to-check-stationarity}{%
+\paragraph{\texorpdfstring{\textbf{ADF test for price to check
+stationarity}}{ADF test for price to check stationarity}}\label{adf-test-for-price-to-check-stationarity}}
+
+==============================================
+
+\textbf{Objective} : To load stock price dataset and check for its
+stationarity
+
+\textbf{Analysis} : Extracted stock price data and checked for
+stationarity; H0 : Price is not stationary
+
+\textbf{Results} : Null hypothesis is accepted; p-value = 0.277
+
+\textbf{Managerial implication} : Stock price of Cipla is not stationary
+in the given time period and thus returns needs to be calculated
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{adf\_test\_cipla\_price }\OtherTok{=} \FunctionTok{adf.test}\NormalTok{(cipla\_price)}
+\NormalTok{adf\_test\_cipla\_price}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  cipla_price
+## Dickey-Fuller = -2.7118, Lag order = 9, p-value = 0.277
+## alternative hypothesis: stationary
+\end{verbatim}
+
+========================================
+
+\hypertarget{obtaining-cipla-stock-return-price}{%
+\paragraph{\texorpdfstring{\textbf{Obtaining cipla stock return
+price}}{Obtaining cipla stock return price}}\label{obtaining-cipla-stock-return-price}}
+
+=========================================
+
+\hypertarget{adf-test-for-price-to-check-stationarity-1}{%
+\paragraph{\texorpdfstring{\textbf{ADF test for price to check
+stationarity}}{ADF test for price to check stationarity}}\label{adf-test-for-price-to-check-stationarity-1}}
+
+\textbf{Objective} : To obtain returns from stock price dataset and
+check for its stationarity
+
+\textbf{Analysis} : Extracted return, visualised and checked for
+stationarity; H0 : Price is not stationary
+
+\textbf{Results} : Null hypothesis is rejected; p-value = 0.01
+
+\textbf{Managerial implication} : Returns of Cipla is stationary in the
+given time period.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_ret }\OtherTok{=}\FunctionTok{na.omit}\NormalTok{(}\FunctionTok{diff}\NormalTok{(}\FunctionTok{log}\NormalTok{(cipla\_price)))}
+\FunctionTok{plot}\NormalTok{(cipla\_ret)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Time-series-analysis_Disha_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{adf\_test\_cipla }\OtherTok{=} \FunctionTok{adf.test}\NormalTok{(cipla\_ret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in adf.test(cipla_ret): p-value smaller than printed p-value
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{adf\_test\_cipla}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  cipla_ret
+## Dickey-Fuller = -9.4492, Lag order = 9, p-value = 0.01
+## alternative hypothesis: stationary
+\end{verbatim}
+
+========================================================
+
+\hypertarget{checking-for-autocorrelation-using-ljung-box-test}{%
+\paragraph{\texorpdfstring{\textbf{Checking for autocorrelation using
+Ljung-Box
+Test}}{Checking for autocorrelation using Ljung-Box Test}}\label{checking-for-autocorrelation-using-ljung-box-test}}
+
+===========================================================
+
+\textbf{Objective} : To check for presence of autocorrelation in the
+returns dataset.
+
+\textbf{Analysis} : Performed Box-Pierce test,to assess the presence of
+autocorrelation in cipla returns dataset
+
+\textbf{Results} : Null hypothesis is rejected; p-value = 0.03651; H0:
+Autocorrelation is absent
+
+\textbf{Managerial implication} : Statistically significant
+autocorrelation present in the returns of the Cipla stock, there is a
+pattern or relationship between the returns at different time periods,
+which could be important for further analysis or modeling of the data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lb\_test\_cipla\_ds }\OtherTok{=} \FunctionTok{Box.test}\NormalTok{(cipla\_ret)}
+\NormalTok{lb\_test\_cipla\_ds}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Box-Pierce test
+## 
+## data:  cipla_ret
+## X-squared = 4.3731, df = 1, p-value = 0.03651
+\end{verbatim}
+
+=============================
+
+\hypertarget{modelling-for-arima}{%
+\paragraph{\texorpdfstring{\textbf{Modelling for
+ARIMA}}{Modelling for ARIMA}}\label{modelling-for-arima}}
+
+==============================
+
+\textbf{Plotting ACF and PACF plots to determine lag value}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{acf}\NormalTok{(cipla\_ret)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Time-series-analysis_Disha_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{pacf}\NormalTok{(cipla\_ret)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Time-series-analysis_Disha_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\textbf{MA order}: ACF cuts off after 0 lags
+
+\textbf{AR order} : PACF slowly declines / tapers
+
+=====================================
+
+\hypertarget{using-auto---arima}{%
+\subparagraph{\texorpdfstring{\textbf{Using auto -
+ARIMA}}{Using auto - ARIMA}}\label{using-auto---arima}}
+
+======================================
+
+\textbf{Objective} : To perform autoARIMA modeling on the daily returns
+of Cipla stock
+
+\textbf{Analysis} : Used the `auto.arima' function to automatically
+select the ARIMA model for returns
+
+\textbf{Results} : The ARIMA model is specified as (1,0,0), indicating
+that it includes an autoregressive (AR) term of order 1 and no
+differencing (I) or moving average (MA) terms i.e.~
+
+AR Order (p-Lags) : p lags = 1;
+
+d-Degree of Differencing = 0 (returns price);
+
+MA Order (q-Lags): q lags = 0
+
+The autoregressive coefficient (ar1) is approximately -0.0665.
+
+The mean coefficient (mean) is approximately 8e-04.
+
+\textbf{Managerial implication} : The negative AR coefficient suggests a
+negative autocorrelation, indicating that past returns have a negative
+impact on current returns. The estimated parameters can be used to make
+predictions about future returns and assess the model's performance.
+
+\textbf{Model} : y(t) = 8e - 04 -n0.0665*y(t-1) + e(t)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{arma\_pq\_cipla }\OtherTok{=} \FunctionTok{auto.arima}\NormalTok{(cipla\_ret) }
+\NormalTok{arma\_pq\_cipla}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Series: cipla_ret 
+## ARIMA(1,0,0) with non-zero mean 
+## 
+## Coefficients:
+##           ar1   mean
+##       -0.0665  8e-04
+## s.e.   0.0317  5e-04
+## 
+## sigma^2 = 0.0003125:  log likelihood = 2588.81
+## AIC=-5171.62   AICc=-5171.59   BIC=-5156.93
+\end{verbatim}
+
+\hypertarget{checking-arima-residuals-for-autocorrelation-using-ljung-box-test}{%
+\subparagraph{\texorpdfstring{\textbf{Checking ARIMA residuals for
+autocorrelation using Ljung box
+test}}{Checking ARIMA residuals for autocorrelation using Ljung box test}}\label{checking-arima-residuals-for-autocorrelation-using-ljung-box-test}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lb\_test\_arma\_pq\_cipla\_ds }\OtherTok{=} \FunctionTok{Box.test}\NormalTok{(arma\_pq\_cipla}\SpecialCharTok{$}\NormalTok{residuals)}
+\NormalTok{lb\_test\_arma\_pq\_cipla\_ds}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Box-Pierce test
+## 
+## data:  arma_pq_cipla$residuals
+## X-squared = 0.0043052, df = 1, p-value = 0.9477
+\end{verbatim}
+
+\textbf{Result}: p-value = 0.9477, null hypothesis is accepted, ARIMA
+model is appropriate, no autocorrelation in residuals
+
+=================================
+
+\hypertarget{forcasting-for-40-days}{%
+\paragraph{\texorpdfstring{\textbf{Forcasting for 40
+days}}{Forcasting for 40 days}}\label{forcasting-for-40-days}}
+
+==================================
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_ds\_fpq }\OtherTok{=} \FunctionTok{forecast}\NormalTok{(arma\_pq\_cipla, }\AttributeTok{h =} \DecValTok{40}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(cipla\_ds\_fpq)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Time-series-analysis_Disha_files/figure-latex/unnamed-chunk-12-1.pdf}
+\#\#\#\# \textbf{Squaring ARIMA residuals and checking for
+autocorrelation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_sq }\OtherTok{=}\NormalTok{ arma\_pq\_cipla}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}
+\FunctionTok{plot}\NormalTok{(cipla\_sq)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Time-series-analysis_Disha_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_ret\_sq\_box\_test }\OtherTok{=} \FunctionTok{Box.test}\NormalTok{(cipla\_sq, }\AttributeTok{lag =} \DecValTok{10}\NormalTok{)}
+\NormalTok{cipla\_ret\_sq\_box\_test}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Box-Pierce test
+## 
+## data:  cipla_sq
+## X-squared = 234.11, df = 10, p-value < 2.2e-16
+\end{verbatim}
+
+\textbf{Null is accpeted, p-value \textless{} 2.2e-16; H0: Return
+Variance Series is Not Serially Correlated}
+
+==============================================================
+
+\hypertarget{checking-for-heteroskedasticity-using-arch-lm-test}{%
+\paragraph{\texorpdfstring{\textbf{Checking for Heteroskedasticity using
+ARCH LM
+test}}{Checking for Heteroskedasticity using ARCH LM test}}\label{checking-for-heteroskedasticity-using-arch-lm-test}}
+
+===============================================================
+
+\textbf{Objective} : To test for volatility clustering or
+heteroskedasticity in the residuals of the ARIMA(1, 0, 0) model
+
+\textbf{Analysis} : Conducted Box test and ARCH test on the squared
+residuals to assess the presence of volatility clustering
+
+\textbf{Results} : Null hypothesis is rejected; p-value = 0.01419; H0:
+No heteroskedasticity present
+
+\textbf{Managerial implication} : There are significant ARCH effects
+present in the returns of the Cipla stock. In other words, the variance
+of the returns is not constant over time, indicating that the volatility
+of the stock's returns varies over time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_arch\_test }\OtherTok{=} \FunctionTok{ArchTest}\NormalTok{(cipla\_sq, }\AttributeTok{lags =} \DecValTok{1}\NormalTok{)}
+\NormalTok{cipla\_arch\_test}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  cipla_sq
+## Chi-squared = 6.0147, df = 1, p-value = 0.01419
+\end{verbatim}
+
+==========================
+
+\hypertarget{modelling-for-garch}{%
+\paragraph{\texorpdfstring{\textbf{Modelling for
+GARCH}}{Modelling for GARCH}}\label{modelling-for-garch}}
+
+==========================
+
+\textbf{Objective} : To fit GARCH models to the residuals of the
+ARIMA(1, 0, 0) model and test for volatility clustering.
+
+\textbf{Analysis} : Fitted two GARCH models and conducted ARCH test on
+residuals
+
+\textbf{Results} : Since the p-value (0.102) is greater than the typical
+significance level of 0.05, we fail to reject the null hypothesis. This
+means that there is not enough evidence to conclude that there are ARCH
+effects present in the squared residuals at a significance level of 0.05
+
+\textbf{Managerial implication} :The result suggests that the squared
+residuals from the GARCH model do not exhibit significant conditional
+heteroskedasticity. Therefore, the volatility clustering or conditional
+heteroskedasticity patterns in the data might be adequately captured by
+the current GARCH model
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{garch\_model1 }\OtherTok{=} \FunctionTok{ugarchspec}\NormalTok{(}\AttributeTok{variance.model =} \FunctionTok{list}\NormalTok{(}\AttributeTok{model =} \StringTok{\textquotesingle{}sGARCH\textquotesingle{}}\NormalTok{, }\AttributeTok{garchOrder =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)), }\AttributeTok{mean.model =} \FunctionTok{list}\NormalTok{(}\AttributeTok{armaOrder =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }\AttributeTok{include.mean =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{cipla\_ret\_garch1 }\OtherTok{=} \FunctionTok{ugarchfit}\NormalTok{(garch\_model1, }\AttributeTok{data =}\NormalTok{ cipla\_ret); }
+\NormalTok{cipla\_ret\_garch1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics    
+## -----------------------------------
+## GARCH Model  : sGARCH(1,1)
+## Mean Model   : ARFIMA(0,0,0)
+## Distribution : norm 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.000511    0.000479   1.0669    0.286
+## omega   0.000015    0.000002   8.2526    0.000
+## alpha1  0.098120    0.012051   8.1423    0.000
+## beta1   0.855640    0.016434  52.0645    0.000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error  t value Pr(>|t|)
+## mu      0.000511    0.000436   1.1729 0.240846
+## omega   0.000015    0.000003   4.8306 0.000001
+## alpha1  0.098120    0.018379   5.3387 0.000000
+## beta1   0.855640    0.023568  36.3052 0.000000
+## 
+## LogLikelihood : 2664.151 
+## 
+## Information Criteria
+## ------------------------------------
+##                     
+## Akaike       -5.3795
+## Bayes        -5.3597
+## Shibata      -5.3795
+## Hannan-Quinn -5.3719
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic  p-value
+## Lag[1]                      8.726 0.003137
+## Lag[2*(p+q)+(p+q)-1][2]     8.742 0.004113
+## Lag[4*(p+q)+(p+q)-1][5]     9.297 0.013915
+## d.o.f=0
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                     0.1478  0.7006
+## Lag[2*(p+q)+(p+q)-1][5]    2.3295  0.5429
+## Lag[4*(p+q)+(p+q)-1][9]    3.7577  0.6301
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3]     1.976 0.500 2.000  0.1598
+## ARCH Lag[5]     4.059 1.440 1.667  0.1687
+## ARCH Lag[7]     4.351 2.315 1.543  0.2988
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  8.8495
+## Individual Statistics:              
+## mu     0.07977
+## omega  1.52911
+## alpha1 0.20561
+## beta1  0.18353
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:          1.07 1.24 1.6
+## Individual Statistic:     0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                    t-value   prob sig
+## Sign Bias           1.1266 0.2602    
+## Negative Sign Bias  1.7490 0.0806   *
+## Positive Sign Bias  0.6297 0.5290    
+## Joint Effect        3.4646 0.3254    
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     85.20    2.327e-10
+## 2    30     98.01    2.034e-09
+## 3    40    103.13    1.064e-07
+## 4    50    118.13    1.223e-07
+## 
+## 
+## Elapsed time : 0.1226602
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{garch\_model2 }\OtherTok{=} \FunctionTok{ugarchspec}\NormalTok{(}\AttributeTok{variance.model =} \FunctionTok{list}\NormalTok{(}\AttributeTok{model =} \StringTok{\textquotesingle{}sGARCH\textquotesingle{}}\NormalTok{, }\AttributeTok{garchOrder =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)), }\AttributeTok{mean.model =} \FunctionTok{list}\NormalTok{(}\AttributeTok{armaOrder =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{include.mean =} \ConstantTok{FALSE}\NormalTok{))}
+\NormalTok{cipla\_ret\_garch2 }\OtherTok{=} \FunctionTok{ugarchfit}\NormalTok{(garch\_model2, }\AttributeTok{data =}\NormalTok{ cipla\_ret); }
+\NormalTok{cipla\_ret\_garch2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *---------------------------------*
+## *          GARCH Model Fit        *
+## *---------------------------------*
+## 
+## Conditional Variance Dynamics    
+## -----------------------------------
+## GARCH Model  : sGARCH(1,1)
+## Mean Model   : ARFIMA(1,0,1)
+## Distribution : norm 
+## 
+## Optimal Parameters
+## ------------------------------------
+##         Estimate  Std. Error  t value Pr(>|t|)
+## ar1    -0.091620    0.206316 -0.44408  0.65699
+## ma1    -0.021841    0.205715 -0.10617  0.91545
+## omega   0.000015    0.000003  5.88849  0.00000
+## alpha1  0.101910    0.012911  7.89324  0.00000
+## beta1   0.848766    0.016680 50.88586  0.00000
+## 
+## Robust Standard Errors:
+##         Estimate  Std. Error  t value Pr(>|t|)
+## ar1    -0.091620    0.138664 -0.66074 0.508781
+## ma1    -0.021841    0.133822 -0.16321 0.870352
+## omega   0.000015    0.000005  2.95571 0.003120
+## alpha1  0.101910    0.022607  4.50784 0.000007
+## beta1   0.848766    0.028768 29.50375 0.000000
+## 
+## LogLikelihood : 2668.856 
+## 
+## Information Criteria
+## ------------------------------------
+##                     
+## Akaike       -5.3870
+## Bayes        -5.3622
+## Shibata      -5.3870
+## Hannan-Quinn -5.3776
+## 
+## Weighted Ljung-Box Test on Standardized Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                   0.004398  0.9471
+## Lag[2*(p+q)+(p+q)-1][5]  0.639100  1.0000
+## Lag[4*(p+q)+(p+q)-1][9]  2.044997  0.9826
+## d.o.f=2
+## H0 : No serial correlation
+## 
+## Weighted Ljung-Box Test on Standardized Squared Residuals
+## ------------------------------------
+##                         statistic p-value
+## Lag[1]                  0.0005791  0.9808
+## Lag[2*(p+q)+(p+q)-1][5] 2.3140010  0.5463
+## Lag[4*(p+q)+(p+q)-1][9] 3.8595576  0.6127
+## d.o.f=2
+## 
+## Weighted ARCH LM Tests
+## ------------------------------------
+##             Statistic Shape Scale P-Value
+## ARCH Lag[3]     2.531 0.500 2.000  0.1116
+## ARCH Lag[5]     4.226 1.440 1.667  0.1546
+## ARCH Lag[7]     4.568 2.315 1.543  0.2720
+## 
+## Nyblom stability test
+## ------------------------------------
+## Joint Statistic:  6.926
+## Individual Statistics:              
+## ar1    0.09649
+## ma1    0.08786
+## omega  1.16461
+## alpha1 0.21261
+## beta1  0.19354
+## 
+## Asymptotic Critical Values (10% 5% 1%)
+## Joint Statistic:          1.28 1.47 1.88
+## Individual Statistic:     0.35 0.47 0.75
+## 
+## Sign Bias Test
+## ------------------------------------
+##                    t-value    prob sig
+## Sign Bias           1.1405 0.25435    
+## Negative Sign Bias  1.6523 0.09879   *
+## Positive Sign Bias  0.6526 0.51418    
+## Joint Effect        3.1597 0.36765    
+## 
+## 
+## Adjusted Pearson Goodness-of-Fit Test:
+## ------------------------------------
+##   group statistic p-value(g-1)
+## 1    20     76.86    6.414e-09
+## 2    30     95.64    4.815e-09
+## 3    40     95.37    1.267e-06
+## 4    50    111.05    1.025e-06
+## 
+## 
+## Elapsed time : 0.1127369
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{arima\_model }\OtherTok{\textless{}{-}} \FunctionTok{arima}\NormalTok{(cipla\_ret, }\AttributeTok{order =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+\NormalTok{arima\_residuals }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(arima\_model)}
+\NormalTok{garch\_spec }\OtherTok{\textless{}{-}} \FunctionTok{ugarchspec}\NormalTok{(}\AttributeTok{variance.model =} \FunctionTok{list}\NormalTok{(}\AttributeTok{model =} \StringTok{\textquotesingle{}sGARCH\textquotesingle{}}\NormalTok{, }\AttributeTok{garchOrder =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)), }
+                         \AttributeTok{mean.model =} \FunctionTok{list}\NormalTok{(}\AttributeTok{armaOrder =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{), }\AttributeTok{include.mean =} \ConstantTok{FALSE}\NormalTok{))}
+\NormalTok{garch\_fit }\OtherTok{\textless{}{-}} \FunctionTok{ugarchfit}\NormalTok{(garch\_spec, }\AttributeTok{data =}\NormalTok{ arima\_residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{arch\_lm\_test }\OtherTok{\textless{}{-}} \FunctionTok{ArchTest}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(garch\_fit)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{, }\AttributeTok{lags =} \DecValTok{10}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\StringTok{"ARCH LM{-}test for squared residuals of GARCH model:"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "ARCH LM-test for squared residuals of GARCH model:"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(arch\_lm\_test)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  residuals(garch_fit)^2
+## Chi-squared = 15.917, df = 10, p-value = 0.102
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_ret\_garch\_forecast1 }\OtherTok{=} \FunctionTok{ugarchforecast}\NormalTok{(cipla\_ret\_garch1, }\AttributeTok{n.ahead =} \DecValTok{50}\NormalTok{); }
+\NormalTok{cipla\_ret\_garch\_forecast1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *------------------------------------*
+## *       GARCH Model Forecast         *
+## *------------------------------------*
+## Model: sGARCH
+## Horizon: 50
+## Roll Steps: 0
+## Out of Sample: 0
+## 
+## 0-roll forecast [T0=2022-12-30]:
+##         Series   Sigma
+## T+1  0.0005113 0.01391
+## T+2  0.0005113 0.01411
+## T+3  0.0005113 0.01430
+## T+4  0.0005113 0.01447
+## T+5  0.0005113 0.01464
+## T+6  0.0005113 0.01480
+## T+7  0.0005113 0.01495
+## T+8  0.0005113 0.01509
+## T+9  0.0005113 0.01522
+## T+10 0.0005113 0.01534
+## T+11 0.0005113 0.01546
+## T+12 0.0005113 0.01557
+## T+13 0.0005113 0.01568
+## T+14 0.0005113 0.01578
+## T+15 0.0005113 0.01588
+## T+16 0.0005113 0.01597
+## T+17 0.0005113 0.01605
+## T+18 0.0005113 0.01613
+## T+19 0.0005113 0.01621
+## T+20 0.0005113 0.01628
+## T+21 0.0005113 0.01635
+## T+22 0.0005113 0.01642
+## T+23 0.0005113 0.01648
+## T+24 0.0005113 0.01654
+## T+25 0.0005113 0.01660
+## T+26 0.0005113 0.01665
+## T+27 0.0005113 0.01670
+## T+28 0.0005113 0.01675
+## T+29 0.0005113 0.01680
+## T+30 0.0005113 0.01684
+## T+31 0.0005113 0.01688
+## T+32 0.0005113 0.01692
+## T+33 0.0005113 0.01696
+## T+34 0.0005113 0.01700
+## T+35 0.0005113 0.01703
+## T+36 0.0005113 0.01706
+## T+37 0.0005113 0.01710
+## T+38 0.0005113 0.01713
+## T+39 0.0005113 0.01715
+## T+40 0.0005113 0.01718
+## T+41 0.0005113 0.01721
+## T+42 0.0005113 0.01723
+## T+43 0.0005113 0.01725
+## T+44 0.0005113 0.01728
+## T+45 0.0005113 0.01730
+## T+46 0.0005113 0.01732
+## T+47 0.0005113 0.01734
+## T+48 0.0005113 0.01735
+## T+49 0.0005113 0.01737
+## T+50 0.0005113 0.01739
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cipla\_ret\_garch\_forecast2 }\OtherTok{=} \FunctionTok{ugarchforecast}\NormalTok{(cipla\_ret\_garch2, }\AttributeTok{n.ahead =} \DecValTok{50}\NormalTok{); cipla\_ret\_garch\_forecast2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## *------------------------------------*
+## *       GARCH Model Forecast         *
+## *------------------------------------*
+## Model: sGARCH
+## Horizon: 50
+## Roll Steps: 0
+## Out of Sample: 0
+## 
+## 0-roll forecast [T0=2022-12-30]:
+##          Series   Sigma
+## T+1   1.213e-03 0.01378
+## T+2  -1.112e-04 0.01400
+## T+3   1.018e-05 0.01420
+## T+4  -9.331e-07 0.01439
+## T+5   8.549e-08 0.01457
+## T+6  -7.832e-09 0.01474
+## T+7   7.176e-10 0.01490
+## T+8  -6.575e-11 0.01505
+## T+9   6.024e-12 0.01519
+## T+10 -5.519e-13 0.01532
+## T+11  5.057e-14 0.01545
+## T+12 -4.633e-15 0.01556
+## T+13  4.245e-16 0.01567
+## T+14 -3.889e-17 0.01578
+## T+15  3.563e-18 0.01588
+## T+16 -3.264e-19 0.01597
+## T+17  2.991e-20 0.01606
+## T+18 -2.740e-21 0.01614
+## T+19  2.511e-22 0.01622
+## T+20 -2.300e-23 0.01630
+## T+21  2.107e-24 0.01637
+## T+22 -1.931e-25 0.01643
+## T+23  1.769e-26 0.01650
+## T+24 -1.621e-27 0.01656
+## T+25  1.485e-28 0.01661
+## T+26 -1.361e-29 0.01667
+## T+27  1.247e-30 0.01672
+## T+28 -1.142e-31 0.01677
+## T+29  1.046e-32 0.01681
+## T+30 -9.587e-34 0.01686
+## T+31  8.784e-35 0.01690
+## T+32 -8.048e-36 0.01694
+## T+33  7.373e-37 0.01697
+## T+34 -6.755e-38 0.01701
+## T+35  6.189e-39 0.01704
+## T+36 -5.671e-40 0.01707
+## T+37  5.195e-41 0.01710
+## T+38 -4.760e-42 0.01713
+## T+39  4.361e-43 0.01716
+## T+40 -3.996e-44 0.01719
+## T+41  3.661e-45 0.01721
+## T+42 -3.354e-46 0.01723
+## T+43  3.073e-47 0.01726
+## T+44 -2.816e-48 0.01728
+## T+45  2.580e-49 0.01730
+## T+46 -2.363e-50 0.01731
+## T+47  2.165e-51 0.01733
+## T+48 -1.984e-52 0.01735
+## T+49  1.818e-53 0.01737
+## T+50 -1.665e-54 0.01738
+\end{verbatim}
+
+\end{document}
