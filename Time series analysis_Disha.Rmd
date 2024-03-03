@@ -197,9 +197,9 @@ cipla_arch_test
 ==========================
 
 ###### **Objective** :  To fit GARCH models to the residuals of the ARIMA(1, 0, 0) model and test for volatility clustering.
-###### **Analysis** : Conducted Box test and ARCH test on the squared residuals to assess the presence of volatility clustering
-###### **Results** : Null hypothesis is rejected; p-value = 0.01; H0: No heteroskedasticity present
-###### **Managerial implication** : There are significant ARCH effects present in the returns of the Cipla stock. In other words, the variance of the returns is not constant over time, indicating that the volatility of the stock's returns varies over time.
+###### **Analysis** : Fitted two GARCH models and conducted ARCH test on residuals
+###### **Results** : Since the p-value (0.102) is greater than the typical significance level of 0.05, we fail to reject the null hypothesis. This means that there is not enough evidence to conclude that there are ARCH effects present in the squared residuals at a significance level of 0.05
+###### **Managerial implication** :The result suggests that the squared residuals from the GARCH model do not exhibit significant conditional heteroskedasticity. Therefore, the volatility clustering or conditional heteroskedasticity patterns in the data might be adequately captured by the current GARCH model
 
 ```{r}
 garch_model1 = ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), mean.model = list(armaOrder = c(0,0), include.mean = TRUE))
@@ -214,6 +214,27 @@ cipla_ret_garch2 = ugarchfit(garch_model2, data = cipla_ret);
 cipla_ret_garch2
 
 ```
+
+```{r}
+arima_model <- arima(cipla_ret, order = c(1,0,0))
+arima_residuals <- residuals(arima_model)
+garch_spec <- ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), 
+                         mean.model = list(armaOrder = c(0,0), include.mean = FALSE))
+garch_fit <- ugarchfit(garch_spec, data = arima_residuals^2)
+arch_lm_test <- ArchTest(residuals(garch_fit)^2, lags = 10)
+print("ARCH LM-test for squared residuals of GARCH model:")
+print(arch_lm_test)
+```
+
+```{r}
+cipla_ret_garch_forecast1 = ugarchforecast(cipla_ret_garch1, n.ahead = 50); 
+cipla_ret_garch_forecast1
+```
+```{r}
+cipla_ret_garch_forecast2 = ugarchforecast(cipla_ret_garch2, n.ahead = 50); cipla_ret_garch_forecast2
+```
+
+
 
 
 
