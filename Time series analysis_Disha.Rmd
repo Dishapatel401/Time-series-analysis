@@ -6,16 +6,22 @@ output:
   pdf_document: default
 ---
 
+================================================
 
-##### Downloading and loading relevant packages
+##### **Downloading and loading relevant packages**
+
+================================================
 
 ```{r}
 packages = c('tseries', 'forecast', 'FinTS', 'rugarch', 'quantmod')
 lapply(packages, require, character.only = TRUE)
 ```
 
+==========================================
 
-##### Loading  stock price data from Yahoo
+##### **Loading  stock price data from Yahoo**
+
+===========================================
 
 ```{r}
 getSymbols(Symbols = 'CIPLA.NS', 
@@ -25,27 +31,41 @@ getSymbols(Symbols = 'CIPLA.NS',
            periodicity = 'daily')
 ```
 
+==================================
 
-##### Removing NA values from data
+##### **Removing NA values from data**
+
+===================================
+
 ```{r}
 cipla_price = na.omit(CIPLA.NS$CIPLA.NS.Adjusted)
 class(cipla_price)
 plot( cipla_price)
 ```
-#### ADF test for price to check stationarity
+
+=============================================
+
+#### **ADF test for price to check stationarity**
+
+==============================================
+
 ###### **Objective** : To load stock price dataset and check for its stationarity
 ###### **Analysis** : Extracted stock price data and checked for stationarity; H0 : Price is not stationary
 ###### **Results** : Null hypothesis is accepted; p-value = 0.277
 ###### **Managerial implication** : Stock price of Cipla is not stationary in the given time period and thus returns needs to be calculated
+
 ```{r}
 adf_test_cipla_price = adf.test(cipla_price)
 adf_test_cipla_price
 ```
 
+========================================
 
-#### Obtaining cipla stock return price
+#### **Obtaining cipla stock return price**
 
-#### ADF test for price to check stationarity
+=========================================
+
+#### **ADF test for price to check stationarity**
 
 ###### **Objective** : To obtain returns from stock price dataset and check for its stationarity
 ###### **Analysis** : Extracted return, visualised and checked for stationarity; H0 : Price is not stationary
@@ -63,12 +83,15 @@ adf_test_cipla = adf.test(cipla_ret)
 adf_test_cipla
 ```
 
+========================================================
 
-#### Checking for autocorrelation using Ljung-Box Test
+#### **Checking for autocorrelation using Ljung-Box Test**
+
+===========================================================
 
 ###### **Objective** : To check for presence of autocorrelation in the returns dataset.
 ###### **Analysis** : Performed Box-Pierce test,to assess the presence of autocorrelation in cipla returns dataset
-###### **Results** : Null hypothesis is rejected; p-value = 0.03651
+###### **Results** : Null hypothesis is rejected; p-value = 0.03651; H0: Autocorrelation is absent
 ###### **Managerial implication** : Statistically significant autocorrelation present in the returns of the Cipla stock, there is a pattern or relationship between the returns at different time periods, which could be important for further analysis or modeling of the data
 
 ```{r}
@@ -76,51 +99,68 @@ lb_test_cipla_ds = Box.test(cipla_ret)
 lb_test_cipla_ds
 ```
 
-#### Modelling for ARIMA
+=============================
+
+#### **Modelling for ARIMA**
+
+==============================
 
 ###### **Plotting ACF and PACF plots to determine lag value**
+
 
 ```{r}
 acf(cipla_ret)
 ```
 
-
 ```{r}
 pacf(cipla_ret)
 ```
+
 ###### **MA order**: ACF cuts off after 0 lags
 ###### **AR order** : PACF slowly declines / tapers
 
+=====================================
 
-##### Using auto - ARIMA 
+##### **Using auto - ARIMA**
 
+======================================
 
 ###### **Objective** : To perform autoARIMA modeling on the daily returns of Cipla stock
 ###### **Analysis** : Used the 'auto.arima' function to automatically select the ARIMA model for returns
-###### **Results** : The ARIMA model is specified as (1,0,0), indicating that it includes an autoregressive (AR) term of order 1 and no differencing (I) or moving average (MA) terms i.e. ; AR Order (p-Lags) : p lags = 1; d-Degree of Differencing = 0 (returns price); MA Order (q-Lags): q lags = 0
+###### **Results** : The ARIMA model is specified as (1,0,0), indicating that it includes an autoregressive (AR) term of order 1 and no differencing (I) or moving average (MA) terms i.e. 
+###### AR Order (p-Lags) : p lags = 1; 
+###### d-Degree of Differencing = 0 (returns price); 
+###### MA Order (q-Lags): q lags = 0
+###### The autoregressive coefficient (ar1) is approximately -0.0665.
+###### The mean coefficient (mean) is approximately 8e-04.
+
 ###### **Managerial implication** : The negative AR coefficient suggests a negative autocorrelation, indicating that past returns have a negative impact on current returns. The estimated parameters can be used to make predictions about future returns and assess the model's performance.
+###### **Model** : y(t) = 8e - 04 -n0.0665*y(t-1) + e(t)
 
 ```{r}
 arma_pq_cipla = auto.arima(cipla_ret) 
 arma_pq_cipla
 ```
 
-#### Checking ARIMA residuals for autocorrelation using Ljung box test
+##### **Checking ARIMA residuals for autocorrelation using Ljung box test**
 
 ```{r}
 lb_test_arma_pq_cipla_ds = Box.test(arma_pq_cipla$residuals)
 lb_test_arma_pq_cipla_ds
 ```
 ###### **Result**: p-value = 0.9477, null hypothesis is accepted, ARIMA model is appropriate, no autocorrelation in residuals
-###### **Model** : y(t) = 8e - 04 -n0.0665*y(t-1) + e(t)
 
-#### Forcasting for 40 days
+=================================
+
+#### **Forcasting for 40 days**
+
+==================================
 
 ```{r}
 cipla_ds_fpq = forecast(arma_pq_cipla, h = 40)
 plot(cipla_ds_fpq)
 ```
-#### Squaring ARIMA residuals and checking for autocorrelation
+#### **Squaring ARIMA residuals and checking for autocorrelation**
 
 ```{r}
 cipla_sq = arma_pq_cipla$residuals^2
@@ -131,21 +171,30 @@ plot(cipla_sq)
 cipla_ret_sq_box_test = Box.test(cipla_sq, lag = 10)
 cipla_ret_sq_box_test
 ```
-###### Null is accpeted, p-value < 2.2e-16; H0: Return Variance Series is Not Serially Correlated
 
+###### **Null is accpeted, p-value < 2.2e-16; H0: Return Variance Series is Not Serially Correlated**
 
-#### Checking for Heteroskedasticity using ARCH LM test
+==============================================================
 
+#### **Checking for Heteroskedasticity using ARCH LM test**
+
+===============================================================
 
 ###### **Objective** :  To test for volatility clustering or heteroskedasticity in the residuals of the ARIMA(1, 0, 0) model
 ###### **Analysis** : Conducted Box test and ARCH test on the squared residuals to assess the presence of volatility clustering
 ###### **Results** : Null hypothesis is rejected; p-value = 0.01419; H0: No heteroskedasticity present
 ###### **Managerial implication** : There are significant ARCH effects present in the returns of the Cipla stock. In other words, the variance of the returns is not constant over time, indicating that the volatility of the stock's returns varies over time.
+
 ```{r}
 cipla_arch_test = ArchTest(cipla_sq, lags = 1)
 cipla_arch_test
 ```
-#### Modelling for GARCH
+
+==========================
+
+#### **Modelling for GARCH**
+
+==========================
 
 ###### **Objective** :  To fit GARCH models to the residuals of the ARIMA(1, 0, 0) model and test for volatility clustering.
 ###### **Analysis** : Conducted Box test and ARCH test on the squared residuals to assess the presence of volatility clustering
@@ -162,7 +211,7 @@ garch_cipla
 ```{r}
 arima_model <- arima(cipla_ret, order = c(1,0,0))
 arima_residuals <- residuals(arima_model)
-garch_fit <- ugarchfit(garch_spec, data = arima_residuals^2)
+garch_fit <- ugarchfit(garch_cipla, data = arima_residuals^2)
 arch_lm_test <- ArchTest(residuals(garch_fit)^2, lags = 10)
 print(arch_lm_test)
 
