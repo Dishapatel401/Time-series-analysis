@@ -202,22 +202,18 @@ cipla_arch_test
 ###### **Managerial implication** : There are significant ARCH effects present in the returns of the Cipla stock. In other words, the variance of the returns is not constant over time, indicating that the volatility of the stock's returns varies over time.
 
 ```{r}
-garch_cipla <- ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), 
-                         mean.model = list(armaOrder = c(0,0), include.mean = FALSE))
-garch_cipla
+garch_model1 = ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), mean.model = list(armaOrder = c(0,0), include.mean = TRUE))
+cipla_ret_garch1 = ugarchfit(garch_model1, data = cipla_ret); 
+cipla_ret_garch1
 ```
 
 
 ```{r}
-arima_model <- arima(cipla_ret, order = c(1,0,0))
-arima_residuals <- residuals(arima_model)
-garch_fit <- ugarchfit(garch_cipla, data = arima_residuals^2)
-arch_lm_test <- ArchTest(residuals(garch_fit)^2, lags = 10)
-print(arch_lm_test)
+garch_model2 = ugarchspec(variance.model = list(model = 'sGARCH', garchOrder = c(1,1)), mean.model = list(armaOrder = c(1,1), include.mean = FALSE))
+cipla_ret_garch2 = ugarchfit(garch_model2, data = cipla_ret); 
+cipla_ret_garch2
 
 ```
-
-
 
 
 
